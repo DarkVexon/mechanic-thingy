@@ -24,8 +24,8 @@ import java.util.ArrayList;
 public class VexMechanic {
 
 
-    private static final float POS_X = Settings.WIDTH / 2 - (300F * Settings.scale);
-    private static final float POS_Y = Settings.HEIGHT / 3;
+    private static final float POS_X = Settings.WIDTH / 2 - (400F * Settings.scale);
+    private static final float POS_Y = Settings.HEIGHT / 3 + (200F * Settings.scale);
 
     private static FrameBuffer fbo;
 
@@ -41,8 +41,8 @@ public class VexMechanic {
         costOneBenefits.add(new VexMechanicBenefit("Draw two cards.", () -> Wiz.atb(new DrawCardAction(2)), 1));
         costOneBenefits.add(new VexMechanicBenefit("Deal 5 damage to ALL enemies.", () -> Wiz.atb(new DamageAllEnemiesAction(AbstractDungeon.player, DamageInfo.createDamageMatrix(5, true), DamageInfo.DamageType.THORNS, AbstractGameAction.AttackEffect.FIRE)), 1));
         for (VexMechanicBenefit b : costOneBenefits) {
-            b.y = POS_X;
-            b.y = costOneBenefits.indexOf(b) * 50;
+            b.x = POS_X;
+            b.y = POS_Y + costOneBenefits.indexOf(b) * (40 * Settings.scale);
         }
     }
 
@@ -62,8 +62,12 @@ public class VexMechanic {
 
 
     public static void render(SpriteBatch sb) {
-        ImageHelper.drawTextureScaled(sb, panelBG, POS_X, POS_Y, 1);
-        FontHelper.renderFontCentered(sb, FontHelper.dungeonTitleFont, "Token Shop", POS_X, POS_Y, Color.WHITE.cpy(), 0.4F);
+        ImageHelper.drawTextureScaled(sb, panelBG, POS_X, POS_Y, 1); // Render BG
+
+        // Render Title Text
+        FontHelper.renderFontCentered(sb, FontHelper.dungeonTitleFont, "Token Shop", POS_X + (333 * Settings.scale), POS_Y + (300 * Settings.scale), Color.WHITE.cpy(), 0.4F);
+
+        // Render shuffler slot for bonus 1
 
         sb.setColor(Color.WHITE.cpy());
         sb.end();
@@ -83,7 +87,7 @@ public class VexMechanic {
 
         sb.setBlendFunction(0, GL20.GL_SRC_ALPHA);
         sb.setColor(new Color(1, 1, 1, 1));
-        sb.draw(mask, POS_X, POS_Y, 50, 250, 100, 500);
+        sb.draw(mask, 0, 0);
         sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
         sb.end();
@@ -98,7 +102,7 @@ public class VexMechanic {
 
     public static void update() {
         for (VexMechanicBenefit b : costOneBenefits) {
-            b.y -= 1;
+            b.y -= 3;
             if (b.y < POS_Y) {
                 b.y += 300F;
             }
