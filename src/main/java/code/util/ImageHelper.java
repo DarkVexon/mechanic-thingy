@@ -38,8 +38,9 @@ public class ImageHelper {
         return new TextureAtlas.AtlasRegion(tex, 0, 0, tex.getWidth(), tex.getHeight());
     }
 
-    public static void drawTextureScaled(SpriteBatch sb, Texture tex, float x, float y) {
-        sb.draw(tex, x, y, 0, 0, tex.getWidth() * Settings.scale, tex.getHeight() * Settings.scale, 1, 1, 0, 0, 0, tex.getWidth(), tex.getHeight(), false, false);
+    public static void drawTextureScaled(SpriteBatch sb, Texture tex, float x, float y, float scale) {
+        float totalScale = Settings.scale * scale;
+        sb.draw(tex, x, y, 0, 0, tex.getWidth() * totalScale, tex.getHeight() * totalScale, 1, 1, 0, 0, 0, tex.getWidth(), tex.getHeight(), false, false);
     }
 
     public static void tipBoxAtMousePos(String name, String description) {

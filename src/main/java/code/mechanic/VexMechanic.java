@@ -1,5 +1,6 @@
 package code.mechanic;
 
+import code.util.ImageHelper;
 import code.util.TexLoader;
 import code.util.Wiz;
 import com.badlogic.gdx.Gdx;
@@ -22,6 +23,10 @@ import java.util.ArrayList;
 
 public class VexMechanic {
 
+
+    private static final float POS_X = Settings.WIDTH / 2 - (300F * Settings.scale);
+    private static final float POS_Y = Settings.HEIGHT / 3;
+
     private static FrameBuffer fbo;
 
     public static void init() {
@@ -35,6 +40,10 @@ public class VexMechanic {
     static {
         costOneBenefits.add(new VexMechanicBenefit("Draw two cards.", () -> Wiz.atb(new DrawCardAction(2)), 1));
         costOneBenefits.add(new VexMechanicBenefit("Deal 5 damage to ALL enemies.", () -> Wiz.atb(new DamageAllEnemiesAction(AbstractDungeon.player, DamageInfo.createDamageMatrix(5, true), DamageInfo.DamageType.THORNS, AbstractGameAction.AttackEffect.FIRE)), 1));
+        for (VexMechanicBenefit b : costOneBenefits) {
+            b.y = POS_X;
+            b.y = costOneBenefits.indexOf(b) * 50;
+        }
     }
 
     public static VexMechanicBenefit cost1;
@@ -47,15 +56,14 @@ public class VexMechanic {
         //cost5 = Wiz.getRandomItem(costFiveBenefits, AbstractDungeon.cardRandomRng);
     }
 
-    private static final float POS_X = Settings.WIDTH / 2 - (140F * Settings.scale);
-    private static final float POS_Y = Settings.HEIGHT / 3;
 
     private static Texture panelBG = TexLoader.getTexture("vexmechanicResources/images/ui/panelBg.png");
     private static Texture mask = TexLoader.getTexture("vexmechanicResources/images/ui/rowMask.png");
 
 
     public static void render(SpriteBatch sb) {
-        sb.draw(panelBG, POS_X, POS_Y);
+        ImageHelper.drawTextureScaled(sb, panelBG, POS_X, POS_Y, 1);
+        FontHelper.renderFontCentered(sb, FontHelper.dungeonTitleFont, "Token Shop", POS_X, POS_Y, Color.WHITE.cpy(), 0.4F);
 
         sb.setColor(Color.WHITE.cpy());
         sb.end();
@@ -90,9 +98,9 @@ public class VexMechanic {
 
     public static void update() {
         for (VexMechanicBenefit b : costOneBenefits) {
-            b.y += 1;
-            if (b.y > POS_Y) {
-                b.y = POS_Y - 300;
+            b.y -= 1;
+            if (b.y < POS_Y) {
+                b.y += 300F;
             }
         }
     }
@@ -117,12 +125,6 @@ public class VexMechanic {
 
         public void render(SpriteBatch sb) {
             FontHelper.renderFontLeftTopAligned(sb, FontHelper.panelNameFont, text, x, y, Color.WHITE.cpy());
-        }
-
-        public enum VexMechanicBenefitCost {
-            ONE,
-            TWO,
-            FIVE
         }
     }
 }

@@ -4,6 +4,11 @@ import basemod.AutoAdd;
 import basemod.BaseMod;
 import basemod.helpers.RelicType;
 import basemod.interfaces.*;
+import code.cards.AbstractEasyCard;
+import code.cards.cardvars.SecondDamage;
+import code.cards.cardvars.SecondMagicNumber;
+import code.mechanic.VexMechanic;
+import code.relics.AbstractEasyRelic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
@@ -15,11 +20,8 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.localization.CharacterStrings;
 import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.localization.RelicStrings;
+import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
-import code.cards.AbstractEasyCard;
-import code.cards.cardvars.SecondDamage;
-import code.cards.cardvars.SecondMagicNumber;
-import code.relics.AbstractEasyRelic;
 
 import java.nio.charset.StandardCharsets;
 
@@ -30,7 +32,7 @@ public class ModFile implements
         EditRelicsSubscriber,
         EditStringsSubscriber,
         EditKeywordsSubscriber,
-        EditCharactersSubscriber {
+        EditCharactersSubscriber, OnStartBattleSubscriber, PostInitializeSubscriber, PostDungeonUpdateSubscriber {
 
     public static final String modID = "vexmechanic";
 
@@ -157,5 +159,20 @@ public class ModFile implements
                 BaseMod.addKeyword(modID, keyword.PROPER_NAME, keyword.NAMES, keyword.DESCRIPTION);
             }
         }
+    }
+
+    @Override
+    public void receiveOnBattleStart(AbstractRoom abstractRoom) {
+        VexMechanic.atStartOfCombat();
+    }
+
+    @Override
+    public void receivePostInitialize() {
+        VexMechanic.init();
+    }
+
+    @Override
+    public void receivePostDungeonUpdate() {
+        VexMechanic.update();
     }
 }
