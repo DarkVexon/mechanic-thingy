@@ -9,10 +9,12 @@ import code.cards.cardvars.SecondDamage;
 import code.cards.cardvars.SecondMagicNumber;
 import code.mechanic.VexMechanic;
 import code.relics.AbstractEasyRelic;
+import code.util.TicketIcon;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.evacipated.cardcrawl.mod.stslib.Keyword;
+import com.evacipated.cardcrawl.mod.stslib.icons.CustomIconHelper;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
 import com.megacrit.cardcrawl.core.Settings;
@@ -128,6 +130,8 @@ public class ModFile implements
 
     @Override
     public void receiveEditCards() {
+        CustomIconHelper.addCustomIcon(TicketIcon.get());
+
         BaseMod.addDynamicVariable(new SecondMagicNumber());
         BaseMod.addDynamicVariable(new SecondDamage());
         new AutoAdd(modID)
