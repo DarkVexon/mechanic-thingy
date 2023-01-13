@@ -46,6 +46,11 @@ public class VexMechanic {
     public static ArrayList<VexMechanicBenefit> costTwoBenefits = new ArrayList<>();
     public static ArrayList<VexMechanicBenefit> costFiveBenefits = new ArrayList<>();
 
+    private static final float OPTIONS_ONE_STARTY = POS_Y + (270 * Settings.scale);
+    private static final float OPTIONS_TWO_STARTY = POS_Y + (170 * Settings.scale);
+    private static final float OPTIONS_FIVE_STARTY = POS_Y + (70 * Settings.scale);
+
+
     static {
         costOneBenefits.add(new VexMechanicBenefit("Draw 2 cards.", () -> atb(new DrawCardAction(2)), 1));
         costOneBenefits.add(new VexMechanicBenefit("Deal 5 damage to ALL enemies.", () -> atb(new DamageAllEnemiesAction(AbstractDungeon.player, DamageInfo.createDamageMatrix(5, true), DamageInfo.DamageType.THORNS, AbstractGameAction.AttackEffect.FIRE)), 1));
@@ -61,8 +66,8 @@ public class VexMechanic {
             applyToEnemy(tar, new VulnerablePower(tar, 1, false));
         }, 1));
         for (VexMechanicBenefit b : costOneBenefits) {
-            b.x = POS_X + (40 * Settings.scale);
-            b.y = POS_Y + costOneBenefits.indexOf(b) * (40 * Settings.scale);
+            b.x = POS_X + (50 * Settings.scale);
+            b.y = POS_Y + (270 * Settings.scale) + costOneBenefits.indexOf(b) * (40 * Settings.scale);
         }
 
 
@@ -74,8 +79,8 @@ public class VexMechanic {
         costTwoBenefits.add(new VexMechanicBenefit("Pick a card to draw.", null, 2));
 
         for (VexMechanicBenefit b : costTwoBenefits) {
-            b.x = POS_X + (40 * Settings.scale);
-            b.y = POS_Y + (175 * Settings.scale) + costTwoBenefits.indexOf(b) * (40 * Settings.scale);
+            b.x = POS_X + (50 * Settings.scale);
+            b.y = POS_Y + (170 * Settings.scale) + costTwoBenefits.indexOf(b) * (40 * Settings.scale);
         }
 
         costFiveBenefits.add(new VexMechanicBenefit("Play a card from your draw pile twice.", null, 5));
@@ -85,8 +90,8 @@ public class VexMechanic {
         costFiveBenefits.add(new VexMechanicBenefit("Deal 33 damage to ALL enemies.", null, 5));
 
         for (VexMechanicBenefit b : costFiveBenefits) {
-            b.x = POS_X + (40 * Settings.scale);
-            b.y = POS_Y + (400 * Settings.scale) + costFiveBenefits.indexOf(b) * (40 * Settings.scale);
+            b.x = POS_X + (50 * Settings.scale);
+            b.y = POS_Y + (70 * Settings.scale) + costFiveBenefits.indexOf(b) * (40 * Settings.scale);
         }
 
     }
@@ -234,12 +239,12 @@ public class VexMechanic {
         if (spinTimer1 > 0) {
             for (VexMechanicBenefit b : costOneBenefits) {
                 b.y -= spinTimer1;
-                if (b.y < POS_Y) {
+                if (b.y < OPTIONS_ONE_STARTY - 150F) {
                     b.y += 300F;
                 }
             }
             spinTimer1 -= Gdx.graphics.getDeltaTime() * TIME_MULT;
-            if (spinTimer1 <= 5F && cost1.y <= POS_Y + 235 && cost1.y >= POS_Y + 230) {
+            if (spinTimer1 <= 5F && cost1.y <= POS_Y + 275 && cost1.y >= POS_Y + 265) {
                 spinTimer1 = 0;
             }
         }
@@ -247,7 +252,7 @@ public class VexMechanic {
         if (spinTimer2 > 0) {
             for (VexMechanicBenefit b : costTwoBenefits) {
                 b.y -= spinTimer2;
-                if (b.y < POS_Y) {
+                if (b.y < OPTIONS_TWO_STARTY - 150F) {
                     b.y += 300F;
                 }
             }
@@ -260,12 +265,12 @@ public class VexMechanic {
         if (spinTimer5 > 0) {
             for (VexMechanicBenefit b : costFiveBenefits) {
                 b.y -= spinTimer5;
-                if (b.y < POS_Y) {
+                if (b.y < OPTIONS_FIVE_STARTY - 150F) {
                     b.y += 300F;
                 }
             }
             spinTimer5 -= Gdx.graphics.getDeltaTime() * TIME_MULT;
-            if (spinTimer5 <= 5F && cost5.y <= POS_Y + 55 && cost5.y >= POS_Y + 45) {
+            if (spinTimer5 <= 5F && cost5.y <= POS_Y + (105 * Settings.scale) && cost5.y >= POS_Y + (95 * Settings.scale)) {
                 spinTimer5 = 0;
             }
         }

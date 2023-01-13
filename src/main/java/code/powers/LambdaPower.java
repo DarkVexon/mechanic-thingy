@@ -1,5 +1,7 @@
 package code.powers;
 
+import com.megacrit.cardcrawl.actions.utility.UseCardAction;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 
 public abstract class LambdaPower extends AbstractEasyPower {

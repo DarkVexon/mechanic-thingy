@@ -7,7 +7,7 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import static code.ModFile.makeID;
 
 public class TicketToRide extends AbstractEasyCard {
-    public final static String ID = makeID("Strike");
+    public final static String ID = makeID("TicketToRide");
     // intellij stuff attack, enemy, basic, 6, 3,  , , ,
 
     public TicketToRide() {
